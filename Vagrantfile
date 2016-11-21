@@ -4,7 +4,7 @@
 $script = <<SCRIPT
 echo "Doing provisioning..."
 sudo apt-get update
-sudo apt-get -y install clang libicu-dev libpython2.7-dev
+sudo apt-get -y install clang libicu-dev libpython2.7-dev libcurl3
 
 wget -q https://swift.org/builds/swift-3.0.1-release/ubuntu1604/swift-3.0.1-RELEASE/swift-3.0.1-RELEASE-ubuntu16.04.tar.gz
 wget -q https://swift.org/builds/swift-3.0.1-release/ubuntu1604/swift-3.0.1-RELEASE/swift-3.0.1-RELEASE-ubuntu16.04.tar.gz.sig
@@ -16,6 +16,9 @@ gpg --verify swift-3.0.1-RELEASE-ubuntu16.04.tar.gz.sig || exit 1
 tar xzf swift-3.0.1-RELEASE-ubuntu16.04.tar.gz
 echo "export PATH=`pwd`/swift-3.0.1-RELEASE-ubuntu16.04/usr/bin:${PATH}" > .profile
 . .profile
+
+chown -R ubuntu:ubuntu `pwd`/swift-3.0.1-RELEASE-ubuntu16.04
+
 swift --version || exit 1
 date > /etc/vagrant_provisioned_at
 echo "Done privisioning :)"
