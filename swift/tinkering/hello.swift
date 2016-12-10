@@ -160,3 +160,21 @@ for (kind, numbers) in interestingNumbers { //unpack key-value
 print("largest one is: \(largest) which is of kind: \(largestKind)")
 // note: dictionaries are an unordered collection, so their keys and values are
 // iterated over in an arbitrary order
+
+// while/repeat
+var n = 2
+while n < 100 {
+	n *= 2
+}
+print(n)
+
+var m = 2
+repeat {
+	m *= 2
+} while m < 100
+print(m)
+
+// lower and upper range
+for i in 0 ... 10 {
+	print(i)
+}
