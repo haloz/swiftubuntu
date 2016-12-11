@@ -42,7 +42,7 @@ print(ten.compareRanks(otherRank: Rank.ten)) // same
 let rawRank = Rank(rawValue : 5)
 print(rawRank)
 
-enum Suit {
+enum Suit: Int {
 	case spades, hearts, diamonds, clubs
 	func simpleDescription() -> String {
 		switch self {
