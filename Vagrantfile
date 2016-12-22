@@ -6,23 +6,23 @@ echo "Doing provisioning..."
 sudo apt-get update
 sudo apt-get -y install clang libicu-dev libpython2.7-dev curl libcurl3
 
-wget -q https://swift.org/builds/swift-3.0.1-release/ubuntu1604/swift-3.0.1-RELEASE/swift-3.0.1-RELEASE-ubuntu16.04.tar.gz
-wget -q https://swift.org/builds/swift-3.0.1-release/ubuntu1604/swift-3.0.1-RELEASE/swift-3.0.1-RELEASE-ubuntu16.04.tar.gz.sig
+wget -q https://swift.org/builds/swift-3.0.2-release/ubuntu1604/swift-3.0.2-RELEASE/swift-3.0.2-RELEASE-ubuntu16.04.tar.gz
+wget -q https://swift.org/builds/swift-3.0.2-release/ubuntu1604/swift-3.0.2-RELEASE/swift-3.0.2-RELEASE-ubuntu16.04.tar.gz.sig
 
 wget -q -O - https://swift.org/keys/all-keys.asc | gpg --import -
 gpg --keyserver hkp://pool.sks-keyservers.net --refresh-keys Swift
-gpg --verify swift-3.0.1-RELEASE-ubuntu16.04.tar.gz.sig || exit 1
+gpg --verify swift-3.0.2-RELEASE-ubuntu16.04.tar.gz.sig || exit 1
 
-tar xzf swift-3.0.1-RELEASE-ubuntu16.04.tar.gz
+tar xzf swift-3.0.2-RELEASE-ubuntu16.04.tar.gz
 
 wget -q https://github.com/exercism/cli/releases/download/v2.3.0/exercism-linux-64bit.tgz
-mkdir ~/exercism
-tar xzf exercism-linux-64bit.tgz -C ~/exercism
+mkdir /home/ubuntu/exercism
+tar xzf exercism-linux-64bit.tgz -C /home/ubuntu/exercism/
 
-echo "export PATH=`pwd`/swift-3.0.1-RELEASE-ubuntu16.04/usr/bin:~/exercism:${PATH}" > .profile
+echo "export PATH=`pwd`/swift-3.0.2-RELEASE-ubuntu16.04/usr/bin:/home/ubuntu/exercism/exercism:${PATH}" > .profile
 . .profile
 
-sudo chown -R ubuntu:ubuntu ~/*
+sudo chown -R ubuntu:ubuntu /home/ubuntu/*
 
 swift --version || exit 1
 
@@ -37,7 +37,7 @@ SCRIPT
 
 Vagrant.configure(2) do |config|
     config.vm.box = "ubuntu/xenial64"
-    #config.vm.network "forwarded_port", guest: 20080, host: 20080
+    config.vm.synced_folder ".", "/vagrant"    
     config.vm.provider "virtualbox" do |vb|
         vb.gui = false
         vb.memory = "2048"
